@@ -139,7 +139,7 @@ void main() {
     float emitg = emtieres.x;          // outer (gentle) foam
     float emitr = emtieres.y;      // inner (strong) foam
 
-    float speedg = 0.14;
+    float speedg = 0.12;
     float speedr = 0.10;                  // speed of wake travel
 
     // structured foam (streaks) advected over time

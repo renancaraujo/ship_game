@@ -16,13 +16,13 @@ const float EPSILON = 1e-3;
 #define EPSILON_NRM (0.08 / uSize.x)
 const int ITER_GEOMETRY = 2;
 const int ITER_FRAGMENT = 2;
-const float SEA_HEIGHT = 0.6;
-const float SEA_CHOPPY = 1.0;
-const float SEA_SPEED = 0.41;
-const float SEA_FREQ = 0.46;
+const float SEA_HEIGHT = 1.9;
+const float SEA_CHOPPY = 1.3;
+const float SEA_SPEED = 0.81;
+const float SEA_FREQ = 0.32;
 const vec3 SEA_BASE = vec3(0.005);
 #define SEA_TIME (1.0 + uTime * SEA_SPEED)
-const mat2 octave_m = mat2(1.6, 1.2, -1.2, 1.6);
+const mat2 octave_m = mat2(1.2, 1.2, -1.2, 1.6);
 
 /*
  * "Seascape" by Alexander Alekseev aka TDM - 2014
@@ -76,7 +76,6 @@ float sea_octave(vec2 uv, float choppy) {
 
 float map(vec3 p) {
     float freq = SEA_FREQ;
-    float amp = SEA_HEIGHT;
     float choppy = SEA_CHOPPY;
     vec2 uv = p.xz;
     uv.x *= 0.75;
@@ -85,10 +84,8 @@ float map(vec3 p) {
     for(int i = 0; i < ITER_GEOMETRY; i++) {
         d = sea_octave((uv + SEA_TIME) * freq, choppy);
         d += sea_octave((uv - SEA_TIME) * freq, choppy);
-        h += d * amp;
         uv *= octave_m;
         freq *= 1.9;
-        amp *= 0.22;
         choppy = mix(choppy, 1.0, 0.2);
     }
     return p.y - h;
@@ -119,12 +116,12 @@ vec3 getSeaColor(vec3 p, vec3 n, vec3 l, vec3 eye, vec3 dist) {
     float fresnel = clamp(1.0 - dot(n, -eye), 0.0, 1.0);
     fresnel = min(fresnel * fresnel * fresnel, .5);
 
-    vec3 reflected = vec3(0.0);
+    vec3 reflected = vec3(.0);
     vec3 refracted = SEA_BASE + diffuse(n, l, 50.0);
 
     vec3 color = mix(refracted, reflected, fresnel);
 
-    color += specular(n, l, eye, 1000.0 * inversesqrt(dot(dist, dist)));
+    color += specular(n, l, eye, 1000.0 * inversesqrt(dot(dist, dist * 0.01)));
 
     return color;
 }
@@ -174,8 +171,8 @@ vec3 getPixel(in vec2 coord, float time) {
 
     float t = uRotation;
 
-    vec3 ang = vec3(0.0, 0.53, -t);
-    vec3 ori = vec3(r * sin(t), 78.5, time + r * cos(t));
+    vec3 ang = vec3(0.0, 0.83, -t);
+    vec3 ori = vec3(r * sin(t), 178.5, time + r * cos(t));
     vec3 dir = normalize(vec3(uv.xy, -2.0));
     dir.z += length(uv) * 0.01;
     dir = normalize(dir) * fromEuler(ang);
@@ -184,19 +181,19 @@ vec3 getPixel(in vec2 coord, float time) {
     heightMapTracing(ori, dir, p);
     vec3 dist = p - ori + vec3(0.0, 30.5, 0.0);
     vec3 n = getNormal(p, dot(dist, dist) * EPSILON_NRM);
-    vec3 light = normalize(vec3(0.0, 1000.0, 0.8));
+    vec3 light = normalize(vec3(0.0, 1000.5, -1500))* 0.96;
 
     vec3 color = mix(vec3(1), getSeaColor(p, n, light, dir, dist), pow(smoothstep(0.0, -0.02, dir.y), 0.2));
 
     float brightness = dot(color, vec3(0.299, 0.587, 0.114));
-    float highlightMask = pow(brightness, 1.5);
-    color = color + color * highlightMask * 5.5;
+    float highlightMask = pow(brightness, 2.5);
+    color = color + color * highlightMask * 2.5;
 
     return color;
 }
 
 void main() {
-    float time = -uTime * 6.0;
+    float time = -uTime * 14.0;
     vec2 fragCoord = FlutterFragCoord().xy * vec2(1.0, -1.0) + vec2(0.0, uSize.y);
     vec3 color = getPixel(fragCoord, time);
     fragColor = vec4(pow(color, vec3(0.85)), 1.0);

@@ -12,9 +12,11 @@ import 'dart:ui'
         BlendMode;
 
 import 'package:demo_2/game/game.dart';
+import 'package:demo_2/game/post_process/wake_post_process.dart';
 import 'package:demo_2/game/utilities/game_perspective.dart';
 import 'package:demo_2/game/utilities/isometric_component.dart';
 import 'package:flame/components.dart';
+import 'package:flame/post_process.dart';
 
 class Ground extends PositionComponent with HasGameReference<SomeShipGame> {
   Ground({super.children}) {
@@ -31,6 +33,10 @@ class Ground extends PositionComponent with HasGameReference<SomeShipGame> {
         children: [
           ShipWake(
             position: Vector2(size.x / 2, size.y / 2),
+            postProcess: WakePostProcess(
+              fragmentProgram: game.preloadedPrograms.wake,
+              game: game,
+            ),
           ),
         ],
       ),
@@ -38,8 +44,8 @@ class Ground extends PositionComponent with HasGameReference<SomeShipGame> {
   }
 }
 
-class ShipWake extends PositionComponent with HasGameReference<SomeShipGame> {
-  ShipWake({super.position}) {
+class ShipWake extends PostProcessComponent with HasGameReference<SomeShipGame> {
+  ShipWake({required super.postProcess, super.position}) {
     size = Vector2(860, 1460);
     anchor = Anchor.topCenter;
     priority = -1;
