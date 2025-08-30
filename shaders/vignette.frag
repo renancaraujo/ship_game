@@ -24,5 +24,4 @@ void main() {
     vec4 vignetteColor = vec4(0.0, 0.0, 0.0, vignette);
     // Combine the sepia color  with the vignette effect
     fragColor = sepiaColor * (1.0 - vignette) + vignetteColor;
-
 }

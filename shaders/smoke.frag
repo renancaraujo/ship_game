@@ -179,4 +179,16 @@ void main() {
     backgroundColor.a = clamp(1.0 - transmittance, 0.0, 1.0);
 
     fragColor = backgroundColor;
+
+    /// Apply dither. See more on: https://www.shadertoy.com/view/tfByD1
+    float luminance = fragColor.r;
+    float threshold = bayer4(fragCoord.xy / ditherScale);
+    float scaled = clamp(luminance * float(levels), 0.0, float(levels) - 1e-6);
+    float baseBin = floor(scaled);
+    float fracPart = scaled - baseBin;
+    float chosenBin = baseBin + (fracPart > threshold ? 1.0 : 0.0);
+    chosenBin = clamp(chosenBin, 0.0, float(levels - 1));
+    float outGray = chosenBin / float(levels - 1);
+
+    fragColor.rgb = vec3(outGray);
 }

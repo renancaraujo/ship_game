@@ -6,6 +6,7 @@ import 'package:demo_2/game/entities/ship.dart';
 import 'package:demo_2/game/entities/smoke.dart';
 import 'package:demo_2/game/post_process/sea_post_process.dart';
 import 'package:demo_2/game/post_process/smoke_post_process.dart';
+import 'package:demo_2/game/post_process/vignette_post_process.dart';
 import 'package:demo_2/game/utilities/camera_target.dart';
 import 'package:demo_2/game/utilities/game_perspective.dart';
 import 'package:demo_2/game/utilities/input_interface.dart';
@@ -34,9 +35,12 @@ class SomeShipGame extends FlameGame<MyWorld>
         ),
         world: MyWorld(),
       ) {
-    camera.postProcess = SeaPostProcess(
-      fragmentProgram: preloadedPrograms.sea,
-      game: this,
+    camera.postProcess = PostProcessSequentialGroup(
+      postProcesses: [
+        SeaPostProcess(fragmentProgram: preloadedPrograms.sea, game: this),
+        SmokePostProcess(fragmentProgram: preloadedPrograms.smoke, game: this),
+        
+      ],
     );
   }
 
