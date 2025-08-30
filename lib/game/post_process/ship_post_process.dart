@@ -28,7 +28,10 @@ class ShipPostProcess extends PostProcess {
 
     canvas
       ..save()
-      ..drawRect(Offset.zero & size.toSize(), Paint()..shader = shader)
+      ..drawRect(
+        Offset.zero & size.toSize(),
+        Paint()..shader = shader,
+      )
       ..restore();
   }
 }

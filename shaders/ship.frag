@@ -15,5 +15,6 @@ void main() {
     vec2 uv = pos / uSize;
     vec4 texColor = texture(tTexture, uv);
     float grey = (texColor.r + texColor.g + texColor.b) / 3.0;
-    texColor.rgb = vec3(grey);    fragColor = texColor;
+    texColor.rgb = vec3(grey);    
+    fragColor = texColor;
 }

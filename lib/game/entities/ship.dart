@@ -5,6 +5,7 @@ import 'package:demo_2/game/post_process/ship_post_process.dart';
 import 'package:demo_2/game/utilities/game_perspective.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/layout.dart';
 import 'package:flame/post_process.dart';
 import 'package:flame/sprite.dart';
 
@@ -15,14 +16,9 @@ class Ship extends PositionComponent
   @override
   Future<void> onLoad() async {
     add(
-      PostProcessComponent(
-        postProcess: ShipPostProcess(
-          fragmentProgram: game.preloadedPrograms.ship,
-          game: game,
-        ),
-        size: Vector2(480, 264),
-        anchor: Anchor.center,
-        children: [SpriteShip()],
+      AlignComponent(
+        alignment: Anchor.center,
+        child: SpriteShip(),
       ),
     );
   }
