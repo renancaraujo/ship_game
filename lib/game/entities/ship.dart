@@ -16,9 +16,16 @@ class Ship extends PositionComponent
   @override
   Future<void> onLoad() async {
     add(
-      AlignComponent(
-        alignment: Anchor.center,
-        child: SpriteShip(),
+      PostProcessComponent(
+        postProcess: ShipPostProcess(
+          fragmentProgram: game.preloadedPrograms.ship,
+          game: game,
+        ),
+        size: Vector2(480, 264),
+        anchor: Anchor.center,
+        children: [
+          SpriteShip(),
+        ],
       ),
     );
   }
