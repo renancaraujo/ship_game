@@ -181,7 +181,7 @@ vec3 getPixel(in vec2 coord, float time) {
     heightMapTracing(ori, dir, p);
     vec3 dist = p - ori + vec3(0.0, 30.5, 0.0);
     vec3 n = getNormal(p, dot(dist, dist) * EPSILON_NRM);
-    vec3 light = normalize(vec3(0.0, 1000.5, -1500))* 0.96;
+    vec3 light = normalize(vec3(0.0, 1000.5, -1500)) * 0.96;
 
     vec3 color = mix(vec3(1), getSeaColor(p, n, light, dir, dist), pow(smoothstep(0.0, -0.02, dir.y), 0.2));
 
@@ -197,4 +197,5 @@ void main() {
     vec2 fragCoord = FlutterFragCoord().xy * vec2(1.0, -1.0) + vec2(0.0, uSize.y);
     vec3 color = getPixel(fragCoord, time);
     fragColor = vec4(pow(color, vec3(0.85)), 1.0);
+
 }

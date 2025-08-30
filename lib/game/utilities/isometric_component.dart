@@ -72,9 +72,7 @@ class IsometricPlaneComponent extends PositionComponent
   void update(double dt) {
     super.update(dt);
 
-    if (appliedPerspective != game.gameValues.perspective) {
     _applyIsometricTransformation();
-    }
   }
 
   void _applyIsometricTransformation() {

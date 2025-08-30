@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "demo_2",
+            "name": "Ship game",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "demo_2 (profile mode)",
+            "name": "Ship game (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "demo_2 (release mode)",
+            "name": "Ship game (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

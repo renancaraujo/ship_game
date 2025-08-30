@@ -3,6 +3,9 @@ import 'dart:ui' show Image, FragmentProgram, Color, Paint;
 
 import 'package:demo_2/game/entities/ground.dart';
 import 'package:demo_2/game/entities/ship.dart';
+import 'package:demo_2/game/entities/smoke.dart';
+import 'package:demo_2/game/post_process/sea_post_process.dart';
+import 'package:demo_2/game/post_process/smoke_post_process.dart';
 import 'package:demo_2/game/utilities/camera_target.dart';
 import 'package:demo_2/game/utilities/game_perspective.dart';
 import 'package:demo_2/game/utilities/input_interface.dart';
@@ -12,6 +15,7 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
+import 'package:flame/post_process.dart';
 
 class SomeShipGame extends FlameGame<MyWorld>
     with
@@ -29,7 +33,12 @@ class SomeShipGame extends FlameGame<MyWorld>
           viewport: FixedResolutionViewport(resolution: kResolution),
         ),
         world: MyWorld(),
-      );
+      ) {
+    camera.postProcess = SeaPostProcess(
+      fragmentProgram: preloadedPrograms.sea,
+      game: this,
+    );
+  }
 
   final PreloadedPrograms preloadedPrograms;
 
@@ -83,12 +92,14 @@ class MyWorld extends World {
     addAll([
       ground = Ground(children: [cameraTarget = CameraTarget()]),
       ship = Ship(),
+      smokeParticles = SmokeParticles(),
     ]);
   }
 
   late final Ship ship;
   late final CameraTarget cameraTarget;
   late final Ground ground;
+  late final SmokeParticles smokeParticles;
 }
 
 // Set of fragment programs to be loaded

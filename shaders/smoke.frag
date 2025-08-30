@@ -15,9 +15,9 @@ out vec4 fragColor;
 const int steps = 5;
 const float eps = 1e-4;
 const int levels = 10;
-const float ditherScale = 2.5;
-const vec3 sphereBaseColor = vec3(0.2);
-const float lightIntensity = 0.25;
+const float ditherScale = 1.85;
+const vec3 sphereBaseColor = vec3(0.42);
+const float lightIntensity = 0.5;
 
 float bayer4(vec2 p) {
     ivec2 ip = ivec2(floor(mod(p, 4.0)));
@@ -179,15 +179,4 @@ void main() {
     backgroundColor.a = clamp(1.0 - transmittance, 0.0, 1.0);
 
     fragColor = backgroundColor;
-
-    float luminance = fragColor.r;
-    float threshold = bayer4(fragCoord.xy / ditherScale);
-    float scaled = clamp(luminance * float(levels), 0.0, float(levels) - 1e-6);
-    float baseBin = floor(scaled);
-    float fracPart = scaled - baseBin;
-    float chosenBin = baseBin + (fracPart > threshold ? 1.0 : 0.0);
-    chosenBin = clamp(chosenBin, 0.0, float(levels - 1));
-    float outGray = chosenBin / float(levels - 1);
-
-    fragColor.rgb = vec3(outGray);
 }

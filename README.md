@@ -1,4 +1,4 @@
-# demo_2
+# Ship Game
 
 A new Flutter project.
 
