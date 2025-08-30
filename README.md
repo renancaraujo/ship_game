@@ -1,4 +1,4 @@
-# slides_post_processing
+# demo_2
 
 A new Flutter project.
 
