@@ -1,16 +1,10 @@
 # Ship Game
 
-A new Flutter project.
+An experiment with the [Flame Engine](https://flame-engine.org/) used with the fragment shaders. Built for my talk at [Flutter & Friends 2025](https://www.flutterfriends.dev/).
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+https://github.com/user-attachments/assets/8fba222e-3602-4832-a44f-dbc740e825fa
+
