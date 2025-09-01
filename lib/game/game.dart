@@ -39,7 +39,7 @@ class SomeShipGame extends FlameGame<MyWorld>
       postProcesses: [
         SeaPostProcess(fragmentProgram: preloadedPrograms.sea, game: this),
         SmokePostProcess(fragmentProgram: preloadedPrograms.smoke, game: this),
-        
+        VignettePostProcess(fragmentProgram: preloadedPrograms.vignette),
       ],
     );
   }
